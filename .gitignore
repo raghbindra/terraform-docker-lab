@@ -1,0 +1,16 @@
+# Terraform-related
+.terraform/
+*.tfstate
+*.tfstate.backup
+
+# Local environment files
+*.log
+
+# macOS system files
+.DS_Store
+
+# Python virtualenv (if used)
+.venv/
+
+# Docker-related (optional)
+*.env
