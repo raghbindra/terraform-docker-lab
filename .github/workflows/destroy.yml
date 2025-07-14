@@ -1,0 +1,17 @@
+name: Manual Destroy
+
+on:
+  workflow_dispatch:  # ✅ Only manual trigger
+
+jobs:
+  destroy:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Destroy
+        run: terraform destroy -auto-approve
