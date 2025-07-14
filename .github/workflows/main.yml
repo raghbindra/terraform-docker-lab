@@ -3,6 +3,8 @@ name: Build & Deploy on Self-Hosted Runner
 on:
   push:
     branches: [main]
+  workflow_dispatch:  # ✅ Manual trigger enabled here
+
 
 jobs:
   deploy:
@@ -12,17 +14,29 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # - name: Build Docker image
-      #   run: docker build -t custom-flask-app:latest ./app
+      - name: Build Docker image
+        run: docker build -t custom-flask-app:latest ./app
 
       - name: Terraform Init
         run: terraform init
 
-      # - name: Terraform Plan
-      #   run:  terraform plan
+      - name: Terraform Plan
+        run:  terraform plan
 
-      # - name: Terraform Apply
-      #   run: terraform apply -auto-approve
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
 
-      - name: Terraform destroy
+  destroy:
+    runs-on: self-hosted
+    needs: [deploy]           # optional: makes destroy wait for deploy if run together
+    if: github.event_name == 'workflow_dispatch'  # Manual only
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Destroy
         run: terraform destroy -auto-approve
