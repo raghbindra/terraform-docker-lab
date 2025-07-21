@@ -15,7 +15,7 @@ jobs:
 
       - name: Manual Docker cleanup
         run: |
-            docker rm -f flask-container redis_container nginx_container || true
+            docker rm -f flask-container redis_container nginx_proxy || true
             docker volume rm redis_data || true
             docker network rm dev_network || true
 
