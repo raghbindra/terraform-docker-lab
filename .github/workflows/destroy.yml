@@ -13,5 +13,12 @@ jobs:
       - name: Terraform Init
         run: terraform init
 
+      - name: Manual Docker cleanup
+        run: |
+            docker rm -f flask-container redis_container nginx_container || true
+            docker volume rm redis_data || true
+            docker network rm dev_network || true
+
+
       - name: Terraform Destroy
         run: terraform destroy -auto-approve
