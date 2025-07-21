@@ -53,6 +53,12 @@ resource "docker_container" "nginx_proxy" {
     read_only      = true
   }
 
+  volumes {
+    container_path = "/etc/nginx/.htpasswd"
+    host_path      = abspath("${path.module}/nginx/.htpasswd")
+    read_only      = true
+  }
+
   restart = "always"
 }
 
