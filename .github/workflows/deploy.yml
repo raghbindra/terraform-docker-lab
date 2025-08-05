@@ -24,14 +24,14 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-south-1
 
-      - name: Remove redis_data from Terraform state if it doesn't exist
-        run: terraform state rm docker_volume.redis_data || true
-
       - name: Terraform Init
         run: terraform init
 
       - name: Terraform Plan
         run:  terraform plan
+
+      - name: Remove redis_data from Terraform state if it doesn't exist
+        run: terraform state rm docker_volume.redis_data || true
 
       - name: Terraform Apply
         run: terraform apply -auto-approve
