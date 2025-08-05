@@ -27,11 +27,11 @@ jobs:
       - name: Terraform Init
         run: terraform init
 
+      - name: Remove redis_data from Terraform state if it doesn't exist
+        run:  terraform state rm docker_volume.redis_data || true
+
       - name: Terraform Plan
         run:  terraform plan
-
-      - name: Remove redis_data from Terraform state if it doesn't exist
-        run: terraform state rm docker_volume.redis_data || true
 
       - name: Terraform Apply
         run: terraform apply -auto-approve
